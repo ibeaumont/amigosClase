@@ -1,7 +1,7 @@
 var amigosControllers = angular.module('amigosControllers', []);
 
 //controlador para el index
-amigosControllers.controller('appCtrl',['$scope','$rootScope',function($scope,$rootScope){
+amigosControllers.controller('appCtrl',['$scope','$rootScope','$location',function($scope,$rootScope,$location){
 $rootScope.amigos = [
 	{
 		nombre:"juan",
@@ -16,7 +16,15 @@ $rootScope.amigos = [
 		tlfno:"123456789"
 	}
 	];
-	
+	$scope.isActive=function(viewLocation){
+		if($location.path().indexOf(viewLocation)>=0){
+			return true;
+		}else{
+			return viewLocation===$location.path();
+		}
+		
+		
+	};
 }]);
 
 //controlador para la lista de amigos
@@ -37,8 +45,8 @@ amigosControllers.controller('amigoNewCtrl', ['$scope', '$rootScope','$routePara
   function($scope,$rootScope) {
  	$scope.amigo={nombre:"",tlfno:""};
  	$scope.guardar=function(){
- 		$rootScope.amigos.push($scope.amigo);
- 		console.log($scope.amigo);
- 		console.log($rootScope.amigos);
+ 		if ($scope.amigo.nombre!=""){
+ 			$rootScope.amigos.push($scope.amigo);
+ 		}
  	}
 }]);
